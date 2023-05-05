@@ -28,6 +28,12 @@ public class MedicoController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DadosDetalhamentoMedico> detalhar(@PathVariable Long id) {
+        var medico = medicoRepository.findById(id).orElseThrow();
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
+    }
+
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(
