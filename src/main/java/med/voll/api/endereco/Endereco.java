@@ -1,9 +1,11 @@
 package med.voll.api.endereco;
 
 import jakarta.persistence.Embeddable;
+import lombok.NoArgsConstructor;
 
 
 @Embeddable
+@NoArgsConstructor
 public class Endereco {
 
     private String logradouro;
