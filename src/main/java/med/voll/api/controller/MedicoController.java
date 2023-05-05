@@ -37,7 +37,8 @@ public class MedicoController {
     @Transactional
     public void atualizar(
             @Valid
-            @RequestBody DadosAtualizacaoMedico dados, @PathVariable Long id) {
+            @RequestBody DadosAtualizacaoMedico dados,
+            @PathVariable Long id) {
         var medico = medicoRepository.getReferenceById(id);
         medico.atualizarInformacoes(dados);
 
