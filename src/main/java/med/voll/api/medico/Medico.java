@@ -31,7 +31,7 @@ public class Medico {
 
     private Boolean ativo;
 
-    public Medico(DadosCadastroMedico dados) {
+    public  Medico(DadosCadastroMedico dados) {
         this.ativo = true;
         this.nome = dados.nome();
         this.crm = dados.crm();
