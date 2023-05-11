@@ -32,8 +32,24 @@ public class TokenService {
         }
     }
 
+    public String getSubject(String tokenJWT) {
+        try {
+            var algoritmo = Algorithm.HMAC256(secret);
+            return JWT.require(algoritmo)
+                    .withIssuer("API Voll.med")
+                    .build()
+                    .verify(tokenJWT)
+                    .getSubject();
+        }catch (JWTCreationException exception) {
+            throw new RuntimeException("Token JWT inválido ou expirado", exception);
+        }
+    }
+
     private Instant dataExpiracao() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime
+                .now()
+                .plusHours(2)
+                .toInstant(ZoneOffset.of("-03:00"));
     }
 
 
