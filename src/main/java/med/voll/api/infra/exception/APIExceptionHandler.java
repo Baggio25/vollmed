@@ -2,6 +2,7 @@ package med.voll.api.infra.exception;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import med.voll.api.domain.exception.ValidacaoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,16 +18,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @RestControllerAdvice
 public class APIExceptionHandler{
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity tratarErro404() {
-        return ResponseEntity.notFound().build();
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
         var errors = ex.getFieldErrors();
         return ResponseEntity.badRequest().body(errors.stream().map(DadosErroValidacao::new).toList());
     }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity tratarErro404() {
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(ValidacaoException.class)
+    protected ResponseEntity tratarErroRegraNegocio(ValidacaoException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity tratarErro400(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
